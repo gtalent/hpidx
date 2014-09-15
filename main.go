@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"encoding/json"
 	"github.com/PuerkitoBio/goquery"
@@ -29,11 +30,22 @@ func fetchComicUrl(url string) ([]Comic, error) {
 }
 
 func main() {
-	src, err := fetchComicUrl("http://www.housepetscomic.com/2008/06/02/")
-	if err != nil {
-		fmt.Println(err)
-	} else {
-		out, _ := json.Marshal(src)
-		fmt.Println(string(out))
+	pages := flag.Int("pages", 0, "Number of pages of House Pets data")
+	flag.Parse()
+	var srcs []Comic
+	for i := 0; i < *pages + 1; i++ {
+		url := fmt.Sprint("http://www.housepetscomic.com/category/comic/page/", i, "/")
+		src, err := fetchComicUrl(url)
+		print(fmt.Sprintf("\r%d/%d", i, *pages))
+		if err != nil {
+			fmt.Errorf("%e\n", err)
+		} else {
+			for _, v := range src {
+				srcs = append(srcs, v)
+			}
+		}
 	}
+	println()
+	out, _ := json.MarshalIndent(srcs, "", "\t")
+	fmt.Println(string(out))
 }
