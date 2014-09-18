@@ -55,9 +55,7 @@ func main() {
 		if err != nil {
 			fmt.Errorf("%e\n", err)
 		} else {
-			for _, v := range src {
-				srcs = append(srcs, v)
-			}
+			srcs = append(srcs, src...)
 		}
 	}
 	println()
