@@ -51,7 +51,7 @@ func main() {
 	for i := 1; i < *pages + 1; i++ {
 		url := fmt.Sprint("http://www.housepetscomic.com/category/comic/page/", i, "/")
 		src, err := fetchComicUrl(url)
-		print(fmt.Sprint("\r", i, "/", *pages))
+		print(fmt.Sprint("\rPage: ", i, "/", *pages))
 		if err != nil {
 			fmt.Errorf("%e\n", err)
 		} else {
