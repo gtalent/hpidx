@@ -48,10 +48,10 @@ func main() {
 	pages := flag.Int("pages", 0, "Number of pages of House Pets data")
 	flag.Parse()
 	var srcs []Comic
-	for i := 0; i < *pages + 1; i++ {
+	for i := 1; i < *pages + 1; i++ {
 		url := fmt.Sprint("http://www.housepetscomic.com/category/comic/page/", i, "/")
 		src, err := fetchComicUrl(url)
-		print(fmt.Sprintf("\r%d/%d", i, *pages))
+		print(fmt.Sprint("\r", i, "/", *pages))
 		if err != nil {
 			fmt.Errorf("%e\n", err)
 		} else {
